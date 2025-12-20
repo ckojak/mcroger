@@ -103,7 +103,7 @@ const MediaSection = () => {
               <iframe
                 width="100%"
                 height="100%"
-                src="https://youtube.com/@mcrogertv?si=W_77VkJC-KwSP3VL"
+                src="https://youtube.com/@mcrogertv"
                 title="MC Roger Video"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
