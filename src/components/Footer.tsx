@@ -1,5 +1,43 @@
-import { Instagram, Youtube, Music, Clock } from "lucide-react";
+import { Instagram, Youtube, Music, Clock, Twitter } from "lucide-react";
 import { useEffect, useState } from "react";
+
+// Componentes de ícone personalizados para manter o estilo do Lucide
+// (O Lucide padrão não tem TikTok e SoundCloud nativos)
+const TikTokIcon = ({ className }: { className?: string }) => (
+  <svg 
+    xmlns="http://www.w3.org/2000/svg" 
+    width="24" 
+    height="24" 
+    viewBox="0 0 24 24" 
+    fill="none" 
+    stroke="currentColor" 
+    strokeWidth="2" 
+    strokeLinecap="round" 
+    strokeLinejoin="round" 
+    className={className}
+  >
+    <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
+  </svg>
+);
+
+const SoundCloudIcon = ({ className }: { className?: string }) => (
+  <svg 
+    xmlns="http://www.w3.org/2000/svg" 
+    width="24" 
+    height="24" 
+    viewBox="0 0 24 24" 
+    fill="none" 
+    stroke="currentColor" 
+    strokeWidth="2" 
+    strokeLinecap="round" 
+    strokeLinejoin="round" 
+    className={className}
+  >
+    <path d="M5 18v-6a2 2 0 0 1 2-2 1 1 0 0 0 1-1v-1a4 4 0 0 1 4-4h.5a3.5 3.5 0 0 1 3.5 3.5v.5" />
+    <path d="M16 18h2a4 4 0 0 0 0-8h-1" />
+    <path d="M2 18h1.5" />
+  </svg>
+);
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -79,7 +117,7 @@ const Footer = () => {
           </div>
           
           {/* Social Links */}
-          <div className="flex items-center gap-4">
+          <div className="flex flex-wrap justify-center md:justify-start items-center gap-4">
             <a
               href="https://instagram.com/mcrogeroficial"
               target="_blank"
@@ -91,6 +129,26 @@ const Footer = () => {
             </a>
             
             <a
+              href="https://twitter.com/mcrogeroficial" 
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-12 h-12 rounded-full bg-card border border-border/50 flex items-center justify-center hover:border-blood-light/50 hover:bg-blood/20 transition-all group"
+              aria-label="Twitter"
+            >
+              <Twitter className="w-5 h-5 text-muted-foreground group-hover:text-blood-light transition-colors" />
+            </a>
+
+            <a
+              href="https://tiktok.com/@mcrogeroficial" 
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-12 h-12 rounded-full bg-card border border-border/50 flex items-center justify-center hover:border-blood-light/50 hover:bg-blood/20 transition-all group"
+              aria-label="TikTok"
+            >
+              <TikTokIcon className="w-5 h-5 text-muted-foreground group-hover:text-blood-light transition-colors" />
+            </a>
+
+            <a
               href="https://youtube.com/@mcrogertv"
               target="_blank"
               rel="noopener noreferrer"
@@ -98,6 +156,16 @@ const Footer = () => {
               aria-label="YouTube"
             >
               <Youtube className="w-5 h-5 text-muted-foreground group-hover:text-blood-light transition-colors" />
+            </a>
+
+            <a
+              href="https://soundcloud.com/mcrogeroficial" 
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-12 h-12 rounded-full bg-card border border-border/50 flex items-center justify-center hover:border-blood-light/50 hover:bg-blood/20 transition-all group"
+              aria-label="SoundCloud"
+            >
+              <SoundCloudIcon className="w-5 h-5 text-muted-foreground group-hover:text-blood-light transition-colors" />
             </a>
             
             <a
