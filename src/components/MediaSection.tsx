@@ -58,7 +58,7 @@ const photoGallery = [
   "https://www.instagram.com/p/DSAQwb6AKcP/?igsh=bDJnb2drNmg2ZXo0",
   "https://www.instagram.com/p/DQ5Wb3ZgA3p/?igsh=MnQzYmZjZXlydWQ4",
   "https://www.instagram.com/p/DD-RSlhRfKF/?igsh=YzBudmEyd3RtNGJj",
-  "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=800&q=80",
+  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRV6rBr8kqPPn1Ozi1v2L6-vZF2xBPNw_kIAtZIii7xMA&s=10",
   "https://images.unsplash.com/photo-1501386761578-eac5c94b800a?w=800&q=80",
   "https://images.unsplash.com/photo-1429962714451-bb934ecdc4ec?w=800&q=80",
 ];
