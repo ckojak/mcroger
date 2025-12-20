@@ -55,10 +55,10 @@ const mediaCards: MediaCard[] = [
 
 // Placeholder images for gallery (replace with actual URLs)
 const photoGallery = [
-  "https://www.instagram.com/p/DSAQwb6AKcP/?igsh=bDJnb2drNmg2ZXo0",
-  "https://www.instagram.com/p/DQ5Wb3ZgA3p/?igsh=MnQzYmZjZXlydWQ4",
-  "https://www.instagram.com/p/DD-RSlhRfKF/?igsh=YzBudmEyd3RtNGJj",
-  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRV6rBr8kqPPn1Ozi1v2L6-vZF2xBPNw_kIAtZIii7xMA&s=10",
+  "foto",
+  "foto",
+  "https://scontent.cdninstagram.com/v/t51.75761-15/471304253_18480494068054706_142411895120448294_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=105&ig_cache_key=MzUzMDMzNTE4OTc2MTExNTQzMw%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6InhwaWRzLjE0NDB4MTQ0MC5zZHIuQzMifQ%3D%3D&_nc_ohc=Cq27pxdh8wQQ7kNvwFhbV8W&_nc_oc=AdkVzoVHpKKf-pnz1Se4VLl2bredwITmox1frdR3tFTKuJvPFNsR69FlVm4AMHxKg2c&_nc_zt=23&_nc_ht=scontent.cdninstagram.com&_nc_gid=bNLYnpJZCJDQlSUsqTihDQ&oh=00_AflyTnGd90T7VnEK5h3dHlsaAwQFmh9RIEZUy1cecnxQww&oe=694CAACB",
+  "foto",
   "https://images.unsplash.com/photo-1501386761578-eac5c94b800a?w=800&q=80",
   "https://images.unsplash.com/photo-1429962714451-bb934ecdc4ec?w=800&q=80",
 ];
