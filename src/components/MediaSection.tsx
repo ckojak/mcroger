@@ -17,6 +17,15 @@ import foto4 from '../assets/foto4.jpg';
 import foto5 from '../assets/foto5.jpg';
 import foto6 from '../assets/foto6.jpg';
 
+// --- FUNÇÃO AUXILIAR PARA EXTRAIR ID DO YOUTUBE ---
+// Isso permite que você cole o link completo e ele funcione automaticamente
+const getYouTubeId = (url: string) => {
+  if (!url) return "";
+  const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+  const match = url.match(regExp);
+  return (match && match[2].length === 11) ? match[2] : "";
+};
+
 interface MediaCard {
   id: string;
   title: string;
@@ -105,36 +114,73 @@ const MediaSection = () => {
         );
       
       case "videos":
+        // --- AQUI ESTÁ A MÁGICA: COLE SEUS LINKS COMPLETOS AQUI ---
+        const videosList = [
+          { 
+            url: "https://youtu.be/78QVCTj7PJg?si=PJjUp5uG_ebv3T3_", // Vídeo Grande
+            title: "Vídeo Destaque" 
+          },
+          { 
+            url: "https://youtu.be/HJrp6VtgGSE?si=w3uJW5WCQbbSlZ0B", // Quadrado 1
+            title: "Vídeo 01" 
+          },
+          { 
+            url: "https://youtu.be/UTYNURBuv7o?si=MvLgEw-Wx53GT5dP", // Quadrado 2
+            title: "Vídeo 02" 
+          },
+          { 
+            url: "https://youtu.be/1nSogoq89bU?si=_YCSSB4PCDxp3Hn6", // Quadrado 3
+            title: "Vídeo 03" 
+          },
+        ];
+
+        // Pega o ID do primeiro vídeo para usar no iframe
+        const mainVideoId = getYouTubeId(videosList[0].url);
+
         return (
           <div className="space-y-6">
             <div className="aspect-video bg-surface-dark rounded-lg flex items-center justify-center border border-border">
               <iframe
                 width="100%"
                 height="100%"
-                // Lembre-se: use /embed/ + ID do vídeo
-                src="https://www.youtube.com/embed/SEU_ID_DO_VIDEO" 
+                // A função converte o link completo para o link de embed automaticamente
+                src={`https://www.youtube.com/embed/${mainVideoId}`} 
                 title="MC Roger Video"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
                 className="rounded-lg"
               />
             </div>
+            
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-              {[1, 2, 3].map((item) => (
-                <div
-                  key={item}
-                  className="group relative aspect-video bg-surface-dark rounded-lg overflow-hidden cursor-pointer border border-border/50 hover:border-blood-light/50 transition-all"
-                >
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="w-12 h-12 rounded-full bg-blood-light/80 flex items-center justify-center group-hover:scale-110 transition-transform">
-                      <Video className="w-6 h-6 text-foreground" />
+              {videosList.slice(1).map((video, index) => {
+                const videoId = getYouTubeId(video.url);
+                return (
+                  <a
+                    key={index}
+                    href={video.url} // Usa o link completo para abrir no YouTube
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group relative aspect-video bg-surface-dark rounded-lg overflow-hidden cursor-pointer border border-border/50 hover:border-blood-light/50 transition-all block"
+                  >
+                    {/* Capa automática */}
+                    <img 
+                      src={`https://img.youtube.com/vi/${videoId}/mqdefault.jpg`} 
+                      alt={video.title}
+                      className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity"
+                    />
+                    
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="w-10 h-10 rounded-full bg-blood-light/80 flex items-center justify-center group-hover:scale-110 transition-transform">
+                        <Video className="w-5 h-5 text-foreground" />
+                      </div>
                     </div>
-                  </div>
-                  <div className="absolute bottom-2 left-2 text-sm text-muted-foreground font-body">
-                    Vídeo {item}
-                  </div>
-                </div>
-              ))}
+                    <div className="absolute bottom-2 left-2 right-2 text-xs font-bold text-white shadow-black drop-shadow-md truncate">
+                      {video.title}
+                    </div>
+                  </a>
+                );
+              })}
             </div>
           </div>
         );
