@@ -55,9 +55,9 @@ const mediaCards: MediaCard[] = [
 
 // Placeholder images for gallery (replace with actual URLs)
 const photoGallery = [
-  "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=800&q=80",
-  "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=800&q=80",
-  "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=800&q=80",
+  "https://www.instagram.com/p/DSAQwb6AKcP/?igsh=bDJnb2drNmg2ZXo0",
+  "https://www.instagram.com/p/DQ5Wb3ZgA3p/?igsh=MnQzYmZjZXlydWQ4",
+  "https://www.instagram.com/p/DD-RSlhRfKF/?igsh=YzBudmEyd3RtNGJj",
   "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=800&q=80",
   "https://images.unsplash.com/photo-1501386761578-eac5c94b800a?w=800&q=80",
   "https://images.unsplash.com/photo-1429962714451-bb934ecdc4ec?w=800&q=80",
@@ -103,7 +103,7 @@ const MediaSection = () => {
               <iframe
                 width="100%"
                 height="100%"
-                src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+                src="https://youtube.com/@mcrogertv?si=W_77VkJC-KwSP3VL"
                 title="MC Roger Video"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
