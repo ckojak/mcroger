@@ -9,6 +9,16 @@ import {
   DialogClose,
 } from "@/components/ui/dialog";
 
+// --- IMPORTAÇÃO DAS IMAGENS ---
+// Certifique-se que os arquivos estão na pasta src/assets/gallery/
+// Se suas fotos forem .png ou .jpeg, mude a extensão abaixo.
+import foto1 from '../assets/gallery/foto1.jpg';
+import foto2 from '../assets/gallery/foto2.jpg';
+import foto3 from '../assets/gallery/foto3.jpg';
+import foto4 from '../assets/gallery/foto4.jpg';
+import foto5 from '../assets/gallery/foto5.jpg';
+import foto6 from '../assets/gallery/foto6.jpg';
+
 interface MediaCard {
   id: string;
   title: string;
@@ -53,14 +63,14 @@ const mediaCards: MediaCard[] = [
   },
 ];
 
-// Placeholder images for gallery (replace with actual URLs)
+// --- ARRAY ATUALIZADO COM AS IMPORTAÇÕES ---
 const photoGallery = [
-  "https://drive.google.com/file/d/1VNSMWaZzkSliwaF1i1Qyx9nlm-Qsa5fw/view?usp=drive_open",
-  "https://drive.google.com/file/d/1Im1EQA4Sbf6yl8wel-vPRxlj_T4MBysz/view?usp=drive_open",
-  "https://drive.google.com/file/d/1lxZEWFEn5bCXPATmOpU-1-kbju_sVqpN/view?usp=drive_open",
-  "https://drive.google.com/file/d/1yonyZRaiLc4OR7CCXyqdruuOpAvyc8IW/view?usp=drive_open",
-  "https://drive.google.com/file/d/1dHiVGHWvaeHayp9MeVj6dB-XZfDK3Z8z/view?usp=drive_open",
-  "https://drive.google.com/file/d/1G4Y4TSZcTySC1h7wPZomj2s5w2EqHZy0/view?usp=drive_open",
+  foto1,
+  foto2,
+  foto3,
+  foto4,
+  foto5,
+  foto6
 ];
 
 const MediaSection = () => {
@@ -103,7 +113,8 @@ const MediaSection = () => {
               <iframe
                 width="100%"
                 height="100%"
-                src="https://youtube.com/@mcrogertv"
+                // Lembre-se de trocar pelo ID real do vídeo se ainda não trocou
+                src="https://www.youtube.com/embed/SEU_ID_DO_VIDEO" 
                 title="MC Roger Video"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
@@ -219,7 +230,6 @@ const MediaSection = () => {
                 onClick={() => setSelectedMedia(card)}
                 className="group relative p-8 bg-card rounded-2xl border border-border/50 hover:border-blood-light/50 transition-all duration-500 hover:shadow-blood hover:-translate-y-2 text-left flex-1"
               >
-                {/* Hover glow */}
                 <div className="absolute inset-0 bg-gradient-to-br from-blood/10 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 
                 <div className="relative z-10">
@@ -235,7 +245,6 @@ const MediaSection = () => {
                 </div>
               </button>
               
-              {/* Link completo */}
               <a
                 href={card.driveLink}
                 target="_blank"
@@ -250,7 +259,6 @@ const MediaSection = () => {
         </div>
       </div>
       
-      {/* Media Modal */}
       <Dialog open={!!selectedMedia} onOpenChange={() => setSelectedMedia(null)}>
         <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto bg-card border-border">
           <DialogHeader>
@@ -265,7 +273,6 @@ const MediaSection = () => {
         </DialogContent>
       </Dialog>
       
-      {/* Photo Lightbox */}
       <Dialog open={!!selectedPhoto} onOpenChange={() => setSelectedPhoto(null)}>
         <DialogContent className="max-w-5xl p-0 bg-transparent border-none">
           <DialogClose className="absolute top-4 right-4 z-50 p-2 bg-background/80 rounded-full hover:bg-background">
