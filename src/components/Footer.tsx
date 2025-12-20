@@ -81,7 +81,7 @@ const Footer = () => {
           {/* Social Links */}
           <div className="flex items-center gap-4">
             <a
-              href="https://instagram.com/mcroger"
+              href="https://instagram.com/mcrogeroficial"
               target="_blank"
               rel="noopener noreferrer"
               className="w-12 h-12 rounded-full bg-card border border-border/50 flex items-center justify-center hover:border-blood-light/50 hover:bg-blood/20 transition-all group"
@@ -91,7 +91,7 @@ const Footer = () => {
             </a>
             
             <a
-              href="https://youtube.com/@mcroger"
+              href="https://youtube.com/@mcrogertv"
               target="_blank"
               rel="noopener noreferrer"
               className="w-12 h-12 rounded-full bg-card border border-border/50 flex items-center justify-center hover:border-blood-light/50 hover:bg-blood/20 transition-all group"
@@ -101,7 +101,7 @@ const Footer = () => {
             </a>
             
             <a
-              href="https://open.spotify.com/artist/1bAftSH8umNcGZ0uyV7LMg"
+              href="https://open.spotify.com/artist/6QiUH0jJVJUdnte0jX1Wzj"
               target="_blank"
               rel="noopener noreferrer"
               className="w-12 h-12 rounded-full bg-card border border-border/50 flex items-center justify-center hover:border-blood-light/50 hover:bg-blood/20 transition-all group"
