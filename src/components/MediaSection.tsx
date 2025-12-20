@@ -9,15 +9,13 @@ import {
   DialogClose,
 } from "@/components/ui/dialog";
 
-// --- IMPORTAÇÃO DAS IMAGENS ---
-// Certifique-se que os arquivos estão na pasta src/assets/gallery/
-// Se suas fotos forem .png ou .jpeg, mude a extensão abaixo.
-import foto1 from '../assets/gallery/foto1.jpg';
-import foto2 from '../assets/gallery/foto2.jpg';
-import foto3 from '../assets/gallery/foto3.jpg';
-import foto4 from '../assets/gallery/foto4.jpg';
-import foto5 from '../assets/gallery/foto5.jpg';
-import foto6 from '../assets/gallery/foto6.jpg';
+// --- IMPORTAÇÃO DAS IMAGENS (Direto da pasta assets) ---
+import foto1 from '../assets/foto1.jpg';
+import foto2 from '../assets/foto2.jpg';
+import foto3 from '../assets/foto3.jpg';
+import foto4 from '../assets/foto4.jpg';
+import foto5 from '../assets/foto5.jpg';
+import foto6 from '../assets/foto6.jpg';
 
 interface MediaCard {
   id: string;
@@ -63,7 +61,7 @@ const mediaCards: MediaCard[] = [
   },
 ];
 
-// --- ARRAY ATUALIZADO COM AS IMPORTAÇÕES ---
+// --- ARRAY ATUALIZADO ---
 const photoGallery = [
   foto1,
   foto2,
@@ -113,7 +111,7 @@ const MediaSection = () => {
               <iframe
                 width="100%"
                 height="100%"
-                // Lembre-se de trocar pelo ID real do vídeo se ainda não trocou
+                // Lembre-se: use /embed/ + ID do vídeo
                 src="https://www.youtube.com/embed/SEU_ID_DO_VIDEO" 
                 title="MC Roger Video"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -230,6 +228,7 @@ const MediaSection = () => {
                 onClick={() => setSelectedMedia(card)}
                 className="group relative p-8 bg-card rounded-2xl border border-border/50 hover:border-blood-light/50 transition-all duration-500 hover:shadow-blood hover:-translate-y-2 text-left flex-1"
               >
+                {/* Hover glow */}
                 <div className="absolute inset-0 bg-gradient-to-br from-blood/10 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 
                 <div className="relative z-10">
