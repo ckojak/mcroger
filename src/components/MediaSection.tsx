@@ -15,6 +15,7 @@ interface MediaCard {
   icon: React.ReactNode;
   description: string;
   type: "photos" | "videos" | "logos" | "rider";
+  driveLink: string;
 }
 
 const mediaCards: MediaCard[] = [
@@ -24,6 +25,7 @@ const mediaCards: MediaCard[] = [
     icon: <Camera className="w-10 h-10" />,
     description: "Fotos em alta resolução para divulgação",
     type: "photos",
+    driveLink: "https://drive.google.com/drive/folders/1-KvXH4gZ8X9xZ8X9xZ8X9xZ8X9xZ8X9x",
   },
   {
     id: "videos",
@@ -31,6 +33,7 @@ const mediaCards: MediaCard[] = [
     icon: <Video className="w-10 h-10" />,
     description: "Clipes, apresentações e bastidores",
     type: "videos",
+    driveLink: "https://drive.google.com/drive/folders/1-KvXH4gZ8X9xZ8X9xZ8X9xZ8X9xZ8X9x",
   },
   {
     id: "logos",
@@ -38,6 +41,7 @@ const mediaCards: MediaCard[] = [
     icon: <FileImage className="w-10 h-10" />,
     description: "Arquivos vetoriais e PNG",
     type: "logos",
+    driveLink: "https://drive.google.com/drive/folders/1-KvXH4gZ8X9xZ8X9xZ8X9xZ8X9xZ8X9x",
   },
   {
     id: "rider",
@@ -45,6 +49,7 @@ const mediaCards: MediaCard[] = [
     icon: <FileText className="w-10 h-10" />,
     description: "Mapa de palco e especificações",
     type: "rider",
+    driveLink: "https://drive.google.com/drive/folders/1-KvXH4gZ8X9xZ8X9xZ8X9xZ8X9xZ8X9x",
   },
 ];
 
@@ -209,26 +214,38 @@ const MediaSection = () => {
         
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
           {mediaCards.map((card) => (
-            <button
-              key={card.id}
-              onClick={() => setSelectedMedia(card)}
-              className="group relative p-8 bg-card rounded-2xl border border-border/50 hover:border-blood-light/50 transition-all duration-500 hover:shadow-blood hover:-translate-y-2 text-left"
-            >
-              {/* Hover glow */}
-              <div className="absolute inset-0 bg-gradient-to-br from-blood/10 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              
-              <div className="relative z-10">
-                <div className="text-blood-light mb-4 group-hover:scale-110 transition-transform duration-300">
-                  {card.icon}
+            <div key={card.id} className="flex flex-col">
+              <button
+                onClick={() => setSelectedMedia(card)}
+                className="group relative p-8 bg-card rounded-2xl border border-border/50 hover:border-blood-light/50 transition-all duration-500 hover:shadow-blood hover:-translate-y-2 text-left flex-1"
+              >
+                {/* Hover glow */}
+                <div className="absolute inset-0 bg-gradient-to-br from-blood/10 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                
+                <div className="relative z-10">
+                  <div className="text-blood-light mb-4 group-hover:scale-110 transition-transform duration-300">
+                    {card.icon}
+                  </div>
+                  <h3 className="font-gothic text-xl font-bold mb-2 text-foreground">
+                    {card.title}
+                  </h3>
+                  <p className="text-muted-foreground text-sm font-body">
+                    {card.description}
+                  </p>
                 </div>
-                <h3 className="font-gothic text-xl font-bold mb-2 text-foreground">
-                  {card.title}
-                </h3>
-                <p className="text-muted-foreground text-sm font-body">
-                  {card.description}
-                </p>
-              </div>
-            </button>
+              </button>
+              
+              {/* Link completo */}
+              <a
+                href={card.driveLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-2 flex items-center justify-center gap-1 text-xs text-muted-foreground hover:text-blood-light transition-colors py-2"
+              >
+                <ExternalLink className="w-3 h-3" />
+                Link completo
+              </a>
+            </div>
           ))}
         </div>
       </div>
