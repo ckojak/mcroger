@@ -25,7 +25,7 @@ const mediaCards: MediaCard[] = [
     icon: <Camera className="w-10 h-10" />,
     description: "Fotos em alta resolução para divulgação",
     type: "photos",
-    driveLink: "https://drive.google.com/drive/folders/1-KvXH4gZ8X9xZ8X9xZ8X9xZ8X9xZ8X9x",
+    driveLink: "https://drive.google.com/drive/u/0/mobile/folders/1otv3BEwuUu8lYU4sUsBaqCdxCxOpBond",
   },
   {
     id: "videos",
@@ -33,7 +33,7 @@ const mediaCards: MediaCard[] = [
     icon: <Video className="w-10 h-10" />,
     description: "Clipes, apresentações e bastidores",
     type: "videos",
-    driveLink: "https://drive.google.com/drive/folders/1-KvXH4gZ8X9xZ8X9xZ8X9xZ8X9xZ8X9x",
+    driveLink: "https://drive.google.com/drive/u/0/mobile/folders/128hkN0_VTcLUhI8lwrUq6bxxRCGdS4yJ",
   },
   {
     id: "logos",
@@ -41,7 +41,7 @@ const mediaCards: MediaCard[] = [
     icon: <FileImage className="w-10 h-10" />,
     description: "Arquivos vetoriais e PNG",
     type: "logos",
-    driveLink: "https://drive.google.com/drive/folders/1-KvXH4gZ8X9xZ8X9xZ8X9xZ8X9xZ8X9x",
+    driveLink: "https://drive.google.com/drive/u/0/mobile/folders/1564cllDHDGUQF4sNMl67WNsehGsux59e",
   },
   {
     id: "rider",
@@ -49,7 +49,7 @@ const mediaCards: MediaCard[] = [
     icon: <FileText className="w-10 h-10" />,
     description: "Mapa de palco e especificações",
     type: "rider",
-    driveLink: "https://drive.google.com/drive/folders/1-KvXH4gZ8X9xZ8X9xZ8X9xZ8X9xZ8X9x",
+    driveLink: "https://drive.google.com/drive/u/0/mobile/folders/1NjKRbpihW_jzJKvempMQtV3EqWCpFdAV",
   },
 ];
 
