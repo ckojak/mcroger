@@ -55,12 +55,12 @@ const mediaCards: MediaCard[] = [
 
 // Placeholder images for gallery (replace with actual URLs)
 const photoGallery = [
-  "foto",
-  "foto",
-  "https://scontent.cdninstagram.com/v/t51.75761-15/471304253_18480494068054706_142411895120448294_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=105&ig_cache_key=MzUzMDMzNTE4OTc2MTExNTQzMw%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6InhwaWRzLjE0NDB4MTQ0MC5zZHIuQzMifQ%3D%3D&_nc_ohc=Cq27pxdh8wQQ7kNvwFhbV8W&_nc_oc=AdkVzoVHpKKf-pnz1Se4VLl2bredwITmox1frdR3tFTKuJvPFNsR69FlVm4AMHxKg2c&_nc_zt=23&_nc_ht=scontent.cdninstagram.com&_nc_gid=bNLYnpJZCJDQlSUsqTihDQ&oh=00_AflyTnGd90T7VnEK5h3dHlsaAwQFmh9RIEZUy1cecnxQww&oe=694CAACB",
-  "foto",
-  "https://images.unsplash.com/photo-1501386761578-eac5c94b800a?w=800&q=80",
-  "https://images.unsplash.com/photo-1429962714451-bb934ecdc4ec?w=800&q=80",
+  "https://drive.google.com/file/d/1VNSMWaZzkSliwaF1i1Qyx9nlm-Qsa5fw/view?usp=drive_open",
+  "https://drive.google.com/file/d/1Im1EQA4Sbf6yl8wel-vPRxlj_T4MBysz/view?usp=drive_open",
+  "https://drive.google.com/file/d/1lxZEWFEn5bCXPATmOpU-1-kbju_sVqpN/view?usp=drive_open",
+  "https://drive.google.com/file/d/1yonyZRaiLc4OR7CCXyqdruuOpAvyc8IW/view?usp=drive_open",
+  "https://drive.google.com/file/d/1dHiVGHWvaeHayp9MeVj6dB-XZfDK3Z8z/view?usp=drive_open",
+  "https://drive.google.com/file/d/1G4Y4TSZcTySC1h7wPZomj2s5w2EqHZy0/view?usp=drive_open",
 ];
 
 const MediaSection = () => {
