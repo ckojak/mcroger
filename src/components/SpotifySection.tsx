@@ -24,7 +24,7 @@ const SpotifySection = () => {
           <div className="rounded-xl overflow-hidden shadow-2xl border border-border/50">
             <iframe
               style={{ borderRadius: "12px" }}
-              src="https://open.spotify.com/embed/artist/6QiUH0jJVJUdnte0jX1Wzj?utm_source=generator&theme=0"
+              src="https://open.spotify.com/intl-pt/artist/6QiUH0jJVJUdnte0jX1Wzj"
               width="100%"
               height="352"
               frameBorder="0"
