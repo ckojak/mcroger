@@ -1,58 +1,54 @@
-const SpotifySection = () => {
+import React from 'react';
+import { Music } from 'lucide-react';
+
+interface SpotifyTrack {
+  id: string;
+  title: string;
+  artist: string;
+}
+
+const SpotifySection: React.FC = () => {
+  const artistId = '6QiUH0jJVJUdnte0jX1Wzj';
+  
+  const topSongs: SpotifyTrack[] = [
+    { id: '1', title: 'Tô na Brasília com o Zigão', artist: 'Artist' },
+    { id: '2', title: 'Trilogia 150', artist: 'Artist' },
+    { id: '3', title: 'Sem Sentimento', artist: 'Artist' },
+    { id: '4', title: 'Bandida', artist: 'Artist' },
+    { id: '5', title: 'Melhores Amigos', artist: 'Artist' }
+  ];
+
   return (
-    <section id="musica" className="py-24 relative overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0 bg-surface-darker" />
-      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-blood-light/30 to-transparent" />
-      
-      {/* Red glow */}
-      <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-blood/10 rounded-full blur-[120px]" />
-      
-      <div className="relative z-10 container mx-auto px-4">
-        <div className="text-center mb-12">
-          <h2 className="font-gothic text-4xl md:text-5xl font-bold mb-4 text-gradient-blood">
-            OUÇA AGORA
-          </h2>
-          <p className="text-muted-foreground font-body">
-            Os maiores sucessos do MC Roger
-          </p>
-          <div className="w-24 h-1 bg-gradient-blood mx-auto mt-6 rounded-full" />
+    <section className="py-12 bg-gradient-to-br from-green-50 to-blue-50">
+      <div className="container mx-auto px-4">
+        <div className="flex items-center justify-center mb-8">
+          <Music className="w-8 h-8 text-green-600 mr-3" />
+          <h2 className="text-3xl font-bold text-gray-800">Top Songs</h2>
         </div>
         
-        <div className="max-w-3xl mx-auto">
-          {/* Spotify Embed */}
-          <div className="rounded-xl overflow-hidden shadow-2xl border border-border/50">
-            <iframe
-              style={{ borderRadius: "12px" }}
-              src="https://open.spotify.com/embed/artist/1bAftSH8umNcGZ0uyV7LMg?utm_source=generator&theme=0"
-              width="100%"
-              height="352"
-              frameBorder="0"
-              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-              loading="lazy"
-              title="Spotify Player - MC Roger"
-            />
-          </div>
-          
-          {/* Top Hits Grid */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
-            {[
-              "Sem Sentimento",
-              "Trilogia 150",
-              "Tudo no Sigilo",
-              "Porque se Foi Irmão",
-            ].map((song, index) => (
-              <div
-                key={index}
-                className="group p-4 bg-card rounded-xl border border-border/50 hover:border-blood-light/50 transition-all duration-300 hover:shadow-blood text-center"
-              >
-                <div className="text-3xl font-gothic text-blood-light mb-2">
-                  #{index + 1}
-                </div>
-                <p className="text-sm font-body text-foreground">{song}</p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+          {topSongs.map((song) => (
+            <div
+              key={song.id}
+              className="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition-shadow duration-200"
+            >
+              <div className="flex items-center justify-center w-full h-40 bg-gradient-to-br from-green-400 to-blue-500 rounded-md mb-3">
+                <Music className="w-12 h-12 text-white" />
               </div>
-            ))}
-          </div>
+              <h3 className="font-semibold text-gray-800 text-sm truncate">
+                {song.title}
+              </h3>
+              <p className="text-gray-600 text-xs mt-1">Spotify Artist</p>
+              <a
+                href={`https://open.spotify.com/artist/${artistId}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block mt-3 px-3 py-1 bg-green-600 text-white text-xs rounded hover:bg-green-700 transition-colors"
+              >
+                Listen on Spotify
+              </a>
+            </div>
+          ))}
         </div>
       </div>
     </section>
