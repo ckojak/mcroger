@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Music, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -18,11 +18,7 @@ const PresaveSection = () => {
   const [presaves, setPresaves] = useState<Presave[]>([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    fetchPresaves();
-  }, []);
-
-  const fetchPresaves = async () => {
+  const fetchPresaves = useCallback(async () => {
     const { data, error } = await supabase
       .from("presaves")
       .select("*")
@@ -34,7 +30,11 @@ const PresaveSection = () => {
       setPresaves(data);
     }
     setLoading(false);
-  };
+  }, []);
+
+  useEffect(() => {
+    fetchPresaves();
+  }, [fetchPresaves]);
 
   if (loading) {
     return (

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback, useMemo } from "react";
 import { Camera, Video, FileImage, FileText, X, Download, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -113,7 +113,7 @@ const MediaSection = () => {
           </div>
         );
       
-      case "videos":
+      case "videos": {
         // --- AQUI ESTÁ A MÁGICA: COLE SEUS LINKS COMPLETOS AQUI ---
         const videosList = [
           { 
@@ -184,6 +184,7 @@ const MediaSection = () => {
             </div>
           </div>
         );
+      }
       
       case "logos":
         return (
