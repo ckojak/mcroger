@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
@@ -156,16 +156,16 @@ const PressManager = ({ isAdmin }: { isAdmin: boolean }) => {
   const [items, setItems] = useState<any[]>([]);
   const [form, setForm] = useState({ title: "", source: "", link: "", image_url: "" });
 
-  useEffect(() => {
-    fetchItems();
-  }, []);
-
-  const fetchItems = async () => {
+  const fetchItems = useCallback(async () => {
     const { data } = await supabase.from("press_articles").select("*").order("created_at", { ascending: false });
     if (data) setItems(data);
-  };
+  }, []);
 
-  const handleAdd = async () => {
+  useEffect(() => {
+    fetchItems();
+  }, [fetchItems]);
+
+  const handleAdd = useCallback(async () => {
     if (!isAdmin) return toast.error("Sem permissão");
     if (!form.title || !form.source || !form.link) return toast.error("Preencha os campos obrigatórios");
 
@@ -175,16 +175,16 @@ const PressManager = ({ isAdmin }: { isAdmin: boolean }) => {
     toast.success("Matéria adicionada!");
     setForm({ title: "", source: "", link: "", image_url: "" });
     fetchItems();
-  };
+  }, [isAdmin, form, fetchItems]);
 
-  const handleDelete = async (id: string) => {
+  const handleDelete = useCallback(async (id: string) => {
     if (!isAdmin) return toast.error("Sem permissão");
     const { error } = await supabase.from("press_articles").delete().eq("id", id);
     if (error) return toast.error("Erro ao excluir");
     
     toast.success("Excluído!");
     fetchItems();
-  };
+  }, [isAdmin, fetchItems]);
 
   return (
     <div className="space-y-6">
@@ -235,16 +235,16 @@ const EventsManager = ({ isAdmin }: { isAdmin: boolean }) => {
   const [items, setItems] = useState<any[]>([]);
   const [form, setForm] = useState({ title: "", venue: "", city: "", event_date: "", event_time: "", ticket_link: "" });
 
-  useEffect(() => {
-    fetchItems();
-  }, []);
-
-  const fetchItems = async () => {
+  const fetchItems = useCallback(async () => {
     const { data } = await supabase.from("events").select("*").order("event_date", { ascending: true });
     if (data) setItems(data);
-  };
+  }, []);
 
-  const handleAdd = async () => {
+  useEffect(() => {
+    fetchItems();
+  }, [fetchItems]);
+
+  const handleAdd = useCallback(async () => {
     if (!isAdmin) return toast.error("Sem permissão");
     if (!form.title || !form.venue || !form.city || !form.event_date) return toast.error("Preencha os campos obrigatórios");
 
@@ -254,16 +254,16 @@ const EventsManager = ({ isAdmin }: { isAdmin: boolean }) => {
     toast.success("Evento adicionado!");
     setForm({ title: "", venue: "", city: "", event_date: "", event_time: "", ticket_link: "" });
     fetchItems();
-  };
+  }, [isAdmin, form, fetchItems]);
 
-  const handleDelete = async (id: string) => {
+  const handleDelete = useCallback(async (id: string) => {
     if (!isAdmin) return toast.error("Sem permissão");
     const { error } = await supabase.from("events").delete().eq("id", id);
     if (error) return toast.error("Erro ao excluir");
     
     toast.success("Excluído!");
     fetchItems();
-  };
+  }, [isAdmin, fetchItems]);
 
   return (
     <div className="space-y-6">
@@ -322,16 +322,16 @@ const PresavesManager = ({ isAdmin }: { isAdmin: boolean }) => {
   const [items, setItems] = useState<any[]>([]);
   const [form, setForm] = useState({ title: "", description: "", cover_url: "", presave_link: "", release_date: "" });
 
-  useEffect(() => {
-    fetchItems();
-  }, []);
-
-  const fetchItems = async () => {
+  const fetchItems = useCallback(async () => {
     const { data } = await supabase.from("presaves").select("*").order("created_at", { ascending: false });
     if (data) setItems(data);
-  };
+  }, []);
 
-  const handleAdd = async () => {
+  useEffect(() => {
+    fetchItems();
+  }, [fetchItems]);
+
+  const handleAdd = useCallback(async () => {
     if (!isAdmin) return toast.error("Sem permissão");
     if (!form.title || !form.presave_link) return toast.error("Preencha os campos obrigatórios");
 
@@ -341,16 +341,16 @@ const PresavesManager = ({ isAdmin }: { isAdmin: boolean }) => {
     toast.success("Pre-save adicionado!");
     setForm({ title: "", description: "", cover_url: "", presave_link: "", release_date: "" });
     fetchItems();
-  };
+  }, [isAdmin, form, fetchItems]);
 
-  const handleDelete = async (id: string) => {
+  const handleDelete = useCallback(async (id: string) => {
     if (!isAdmin) return toast.error("Sem permissão");
     const { error } = await supabase.from("presaves").delete().eq("id", id);
     if (error) return toast.error("Erro ao excluir");
     
     toast.success("Excluído!");
     fetchItems();
-  };
+  }, [isAdmin, fetchItems]);
 
   return (
     <div className="space-y-6">
@@ -404,16 +404,16 @@ const ReleasesManager = ({ isAdmin }: { isAdmin: boolean }) => {
   const [items, setItems] = useState<any[]>([]);
   const [form, setForm] = useState({ title: "", cover_url: "", spotify_link: "", youtube_link: "", release_date: "" });
 
-  useEffect(() => {
-    fetchItems();
-  }, []);
-
-  const fetchItems = async () => {
+  const fetchItems = useCallback(async () => {
     const { data } = await supabase.from("releases").select("*").order("release_date", { ascending: false });
     if (data) setItems(data);
-  };
+  }, []);
 
-  const handleAdd = async () => {
+  useEffect(() => {
+    fetchItems();
+  }, [fetchItems]);
+
+  const handleAdd = useCallback(async () => {
     if (!isAdmin) return toast.error("Sem permissão");
     if (!form.title) return toast.error("Preencha o título");
 
@@ -423,16 +423,16 @@ const ReleasesManager = ({ isAdmin }: { isAdmin: boolean }) => {
     toast.success("Lançamento adicionado!");
     setForm({ title: "", cover_url: "", spotify_link: "", youtube_link: "", release_date: "" });
     fetchItems();
-  };
+  }, [isAdmin, form, fetchItems]);
 
-  const handleDelete = async (id: string) => {
+  const handleDelete = useCallback(async (id: string) => {
     if (!isAdmin) return toast.error("Sem permissão");
     const { error } = await supabase.from("releases").delete().eq("id", id);
     if (error) return toast.error("Erro ao excluir");
     
     toast.success("Excluído!");
     fetchItems();
-  };
+  }, [isAdmin, fetchItems]);
 
   return (
     <div className="space-y-6">
@@ -486,20 +486,20 @@ const MediaManager = ({ category, isAdmin }: { category: string; isAdmin: boolea
   const [items, setItems] = useState<any[]>([]);
   const [form, setForm] = useState({ title: "", url: "", thumbnail_url: "", drive_link: "" });
 
-  useEffect(() => {
-    fetchItems();
-  }, [category]);
-
-  const fetchItems = async () => {
+  const fetchItems = useCallback(async () => {
     const { data } = await supabase
       .from("media_items")
       .select("*")
       .eq("category", category)
       .order("display_order", { ascending: true });
     if (data) setItems(data);
-  };
+  }, [category]);
 
-  const handleAdd = async () => {
+  useEffect(() => {
+    fetchItems();
+  }, [fetchItems]);
+
+  const handleAdd = useCallback(async () => {
     if (!isAdmin) return toast.error("Sem permissão");
     if (!form.title || !form.url) return toast.error("Preencha os campos obrigatórios");
 
@@ -509,16 +509,16 @@ const MediaManager = ({ category, isAdmin }: { category: string; isAdmin: boolea
     toast.success("Item adicionado!");
     setForm({ title: "", url: "", thumbnail_url: "", drive_link: "" });
     fetchItems();
-  };
+  }, [isAdmin, form, category, fetchItems]);
 
-  const handleDelete = async (id: string) => {
+  const handleDelete = useCallback(async (id: string) => {
     if (!isAdmin) return toast.error("Sem permissão");
     const { error } = await supabase.from("media_items").delete().eq("id", id);
     if (error) return toast.error("Erro ao excluir");
     
     toast.success("Excluído!");
     fetchItems();
-  };
+  }, [isAdmin, fetchItems]);
 
   return (
     <div className="space-y-6">

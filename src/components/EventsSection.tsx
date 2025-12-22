@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Calendar, MapPin, Clock, ExternalLink } from "lucide-react";
 import { format } from "date-fns";
@@ -18,11 +18,7 @@ const EventsSection = () => {
   const [events, setEvents] = useState<Event[]>([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    fetchEvents();
-  }, []);
-
-  const fetchEvents = async () => {
+  const fetchEvents = useCallback(async () => {
     const today = new Date().toISOString().split("T")[0];
     const { data, error } = await supabase
       .from("events")
@@ -36,7 +32,11 @@ const EventsSection = () => {
       setEvents(data);
     }
     setLoading(false);
-  };
+  }, []);
+
+  useEffect(() => {
+    fetchEvents();
+  }, [fetchEvents]);
 
   if (loading) {
     return (

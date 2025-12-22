@@ -1,4 +1,5 @@
 import { ChevronDown } from "lucide-react";
+import { memo } from "react";
 import heroImage from "@/assets/mc-roger-portrait.jpg";
 import bgTexture from "@/assets/dark-texture-bg.jpg";
 
@@ -66,4 +67,4 @@ const HeroSection = () => {
   );
 };
 
-export default HeroSection;
+export default memo(HeroSection);

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { ExternalLink, Newspaper } from "lucide-react";
 
@@ -15,11 +15,7 @@ const PressSection = () => {
   const [articles, setArticles] = useState<PressArticle[]>([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    fetchArticles();
-  }, []);
-
-  const fetchArticles = async () => {
+  const fetchArticles = useCallback(async () => {
     const { data, error } = await supabase
       .from("press_articles")
       .select("*")
@@ -31,7 +27,11 @@ const PressSection = () => {
       setArticles(data);
     }
     setLoading(false);
-  };
+  }, []);
+
+  useEffect(() => {
+    fetchArticles();
+  }, [fetchArticles]);
 
   if (loading) {
     return (

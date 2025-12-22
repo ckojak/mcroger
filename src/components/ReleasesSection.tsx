@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Music, Play, ExternalLink } from "lucide-react";
 
@@ -15,11 +15,7 @@ const ReleasesSection = () => {
   const [releases, setReleases] = useState<Release[]>([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    fetchReleases();
-  }, []);
-
-  const fetchReleases = async () => {
+  const fetchReleases = useCallback(async () => {
     const { data, error } = await supabase
       .from("releases")
       .select("*")
@@ -31,7 +27,11 @@ const ReleasesSection = () => {
       setReleases(data);
     }
     setLoading(false);
-  };
+  }, []);
+
+  useEffect(() => {
+    fetchReleases();
+  }, [fetchReleases]);
 
   if (loading) {
     return (
