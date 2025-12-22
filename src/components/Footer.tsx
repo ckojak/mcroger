@@ -180,10 +180,17 @@ const Footer = () => {
           </div>
           
           {/* Copyright */}
-          <div className="text-center md:text-right">
+          <div className="text-center md:text-right space-y-2">
             <p className="text-muted-foreground text-sm font-body">
               © {currentYear} MC Roger. Todos os direitos reservados.
             </p>
+            <div className="flex items-center justify-center md:justify-end gap-4">
+              <VisitCounter />
+              <Link to="/auth" className="flex items-center gap-1 text-xs text-muted-foreground hover:text-blood-light transition-colors">
+                <Lock className="w-3 h-3" />
+                Admin
+              </Link>
+            </div>
           </div>
         </div>
       </div>
