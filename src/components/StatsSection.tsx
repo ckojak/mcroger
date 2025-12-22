@@ -124,7 +124,7 @@ const StatsSection = () => {
   ];
 
   return (
-    <section id="numeros" className="py-24 relative overflow-hidden">
+    <section id="numeros" className="py-12 relative overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 bg-surface-darker" />
       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-blood-light/30 to-transparent" />

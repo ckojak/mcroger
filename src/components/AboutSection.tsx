@@ -2,7 +2,7 @@ import { Music, Mic2, Users } from "lucide-react";
 
 const AboutSection = () => {
   return (
-    <section id="sobre" className="py-24 relative">
+    <section id="sobre" className="py-12 relative">
       {/* Background effect */}
       <div className="absolute inset-0 bg-gradient-to-b from-background via-surface-dark to-background" />
       

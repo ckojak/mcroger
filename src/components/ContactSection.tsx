@@ -37,7 +37,7 @@ const ContactSection = () => {
   );
 
   return (
-    <section id="contato" className="py-24 relative">
+    <section id="contato" className="py-12 relative">
       <div className="absolute inset-0 bg-gradient-to-b from-background to-surface-darker" />
       
       {/* Red glow effects */}
