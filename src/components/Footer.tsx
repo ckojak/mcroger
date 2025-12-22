@@ -1,5 +1,7 @@
-import { Instagram, Youtube, Music, Clock, Twitter } from "lucide-react";
+import { Instagram, Youtube, Music, Clock, Twitter, Lock } from "lucide-react";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import VisitCounter from "./VisitCounter";
 
 // Componentes de ícone personalizados para manter o estilo do Lucide
 // (O Lucide padrão não tem TikTok e SoundCloud nativos)
@@ -82,7 +84,7 @@ const Footer = () => {
   }, []);
 
   return (
-    <footer className="py-12 relative border-t border-border/50">
+    <footer className="py-8 relative border-t border-border/50">
       <div className="absolute inset-0 bg-surface-darker" />
       
       <div className="relative z-10 container mx-auto px-4">

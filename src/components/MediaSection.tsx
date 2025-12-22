@@ -253,7 +253,7 @@ const MediaSection = () => {
   };
 
   return (
-    <section id="midia" className="py-24 relative">
+    <section id="midia" className="py-12 relative">
       <div className="absolute inset-0 bg-gradient-to-b from-background via-surface-dark to-background" />
       
       <div className="relative z-10 container mx-auto px-4">
