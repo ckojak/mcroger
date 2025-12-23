@@ -4,7 +4,7 @@
 -- Insert admin users into user_roles table
 INSERT INTO user_roles (email, role)
 VALUES 
-  ('bmw.kojak@gmail.com', 'admin'),
+  ('bmw.reta@hotmail.com', 'admin'),
   ('rgr-rs@hotmail.com', 'admin')
 ON CONFLICT (email) DO UPDATE 
 SET role = 'admin';
