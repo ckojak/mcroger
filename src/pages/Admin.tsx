@@ -2,6 +2,7 @@ import { useEffect, useState, useCallback } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
+import { Tables } from "@/integrations/supabase/types";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -153,7 +154,7 @@ const Admin = () => {
 
 // Press Manager Component
 const PressManager = ({ isAdmin }: { isAdmin: boolean }) => {
-  const [items, setItems] = useState<any[]>([]);
+  const [items, setItems] = useState<Tables<"press_articles">[]>([]);
   const [form, setForm] = useState({ title: "", source: "", link: "", image_url: "" });
 
   const fetchItems = useCallback(async () => {
@@ -232,7 +233,7 @@ const PressManager = ({ isAdmin }: { isAdmin: boolean }) => {
 
 // Events Manager Component
 const EventsManager = ({ isAdmin }: { isAdmin: boolean }) => {
-  const [items, setItems] = useState<any[]>([]);
+  const [items, setItems] = useState<Tables<"events">[]>([]);
   const [form, setForm] = useState({ title: "", venue: "", city: "", event_date: "", event_time: "", ticket_link: "" });
 
   const fetchItems = useCallback(async () => {
@@ -319,7 +320,7 @@ const EventsManager = ({ isAdmin }: { isAdmin: boolean }) => {
 
 // Presaves Manager Component
 const PresavesManager = ({ isAdmin }: { isAdmin: boolean }) => {
-  const [items, setItems] = useState<any[]>([]);
+  const [items, setItems] = useState<Tables<"presaves">[]>([]);
   const [form, setForm] = useState({ title: "", description: "", cover_url: "", presave_link: "", release_date: "" });
 
   const fetchItems = useCallback(async () => {
@@ -401,7 +402,7 @@ const PresavesManager = ({ isAdmin }: { isAdmin: boolean }) => {
 
 // Releases Manager Component
 const ReleasesManager = ({ isAdmin }: { isAdmin: boolean }) => {
-  const [items, setItems] = useState<any[]>([]);
+  const [items, setItems] = useState<Tables<"releases">[]>([]);
   const [form, setForm] = useState({ title: "", cover_url: "", spotify_link: "", youtube_link: "", release_date: "" });
 
   const fetchItems = useCallback(async () => {
@@ -483,7 +484,7 @@ const ReleasesManager = ({ isAdmin }: { isAdmin: boolean }) => {
 
 // Media Manager Component
 const MediaManager = ({ category, isAdmin }: { category: string; isAdmin: boolean }) => {
-  const [items, setItems] = useState<any[]>([]);
+  const [items, setItems] = useState<Tables<"media_items">[]>([]);
   const [form, setForm] = useState({ title: "", url: "", thumbnail_url: "", drive_link: "" });
 
   const fetchItems = useCallback(async () => {
