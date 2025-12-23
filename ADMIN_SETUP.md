@@ -86,6 +86,38 @@ ON CONFLICT (user_id, role) DO NOTHING;
 
 ## Troubleshooting
 
+### Error: "não existe nenhuma restrição de unicidade" or "no unique/exclusion constraint"
+The `user_roles` table is missing the required UNIQUE constraint. This is the complete fix:
+
+```sql
+-- 1. Create type if missing
+DO $$ 
+BEGIN
+    IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'app_role') THEN
+        CREATE TYPE public.app_role AS ENUM ('admin', 'user');
+    END IF;
+END $$;
+
+-- 2. Add UNIQUE constraint if missing
+DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1 FROM pg_constraint 
+        WHERE conname = 'user_roles_user_id_role_key'
+    ) THEN
+        ALTER TABLE public.user_roles 
+        ADD CONSTRAINT user_roles_user_id_role_key UNIQUE (user_id, role);
+    END IF;
+END $$;
+
+-- 3. Assign admin roles
+INSERT INTO public.user_roles (user_id, role)
+SELECT id, 'admin'::app_role
+FROM auth.users
+WHERE email IN ('bmw.kojak@gmail.com', 'rgr-rs@hotmail.com')
+ON CONFLICT (user_id, role) DO NOTHING;
+```
+
 ### Error: "type 'app_role' does not exist" but "relation 'user_roles' already exists"
 This can happen when migrating between Supabase instances. The table exists but the type doesn't. Use this fix:
 
