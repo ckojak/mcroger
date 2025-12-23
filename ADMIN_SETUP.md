@@ -86,7 +86,27 @@ ON CONFLICT (user_id, role) DO NOTHING;
 
 ## Troubleshooting
 
-### Error: "type 'app_role' does not exist"
+### Error: "type 'app_role' does not exist" but "relation 'user_roles' already exists"
+This can happen when migrating between Supabase instances. The table exists but the type doesn't. Use this fix:
+
+```sql
+-- Create only what's missing
+DO $$ 
+BEGIN
+    IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'app_role') THEN
+        CREATE TYPE public.app_role AS ENUM ('admin', 'user');
+    END IF;
+END $$;
+
+-- Now assign admin roles
+INSERT INTO public.user_roles (user_id, role)
+SELECT id, 'admin'::app_role
+FROM auth.users
+WHERE email IN ('bmw.kojak@gmail.com', 'rgr-rs@hotmail.com')
+ON CONFLICT (user_id, role) DO NOTHING;
+```
+
+### Error: "type 'app_role' does not exist" (general)
 This means the database migrations haven't been applied. Go back to **Step 1** and apply the migrations first.
 
 ### Error: "relation 'public.user_roles' does not exist"
