@@ -3,20 +3,45 @@
 ## Problem
 The admin role is not being assigned to users correctly.
 
-## Solution
+## Important: Check if Migrations are Applied First!
 
-### Option 1: Using the New Migration (Recommended)
-If you're using Supabase CLI or can run migrations, the new migration file `20251223003900_fix_admin_user_assignment.sql` will:
-1. Create a trigger to automatically assign admin role to specific emails when they sign up
-2. Assign admin role to any existing users with those emails
+Before following any solution below, check if the database schema is set up:
 
-To apply this migration:
+**Run this in Supabase SQL Editor:**
+```sql
+-- Check if app_role type exists
+SELECT EXISTS (
+  SELECT 1 FROM pg_type WHERE typname = 'app_role'
+) AS type_exists;
+```
+
+- If result is `false`: **Go to Step 1 - Apply All Migrations**
+- If result is `true`: **Go to Step 2 - Assign Admin Roles**
+
+---
+
+## Step 1: Apply All Migrations (If Database Schema Not Set Up)
+
+If you get error `type "app_role" does not exist`, you need to apply the migrations first.
+
+### Option A: Using Supabase CLI (Recommended)
 ```bash
 supabase db push
 ```
 
-### Option 2: Manual Fix via Supabase Dashboard
-If you can't run migrations, follow these steps:
+### Option B: Manual Application via SQL Editor
+Copy and paste ALL migration files in order in the Supabase SQL Editor:
+
+1. **First**, run the entire content of: `supabase/migrations/20251222200446_8d16069f-7cc1-49c6-92bd-231a446230e0.sql`
+2. **Then**, run: `supabase/migrations/20251223003900_fix_admin_user_assignment.sql`
+
+After applying migrations, **go to Step 2**.
+
+---
+
+## Step 2: Assign Admin Roles (After Migrations are Applied)
+
+### Quick Fix via Supabase Dashboard
 
 1. Go to your Supabase Dashboard
 2. Navigate to the SQL Editor
@@ -39,40 +64,40 @@ LEFT JOIN public.user_roles ur ON u.id = ur.user_id
 WHERE u.email IN ('bmw.kojak@gmail.com', 'rgr-rs@hotmail.com');
 ```
 
-### Option 3: Create Trigger for Future Users
-To automatically assign admin role to these emails when they sign up in the future:
+**Expected result:** You should see your email with role 'admin'.
 
-```sql
--- Function to assign admin role to users by email
-CREATE OR REPLACE FUNCTION public.assign_admin_role_by_email()
-RETURNS TRIGGER
-LANGUAGE plpgsql
-SECURITY DEFINER
-SET search_path = public, auth
-AS $$
-BEGIN
-  -- Check if the new user's email is in the admin list
-  IF NEW.email IN ('bmw.kojak@gmail.com', 'rgr-rs@hotmail.com') THEN
-    INSERT INTO public.user_roles (user_id, role)
-    VALUES (NEW.id, 'admin'::app_role)
-    ON CONFLICT (user_id, role) DO NOTHING;
-  END IF;
-  RETURN NEW;
-END;
-$$;
+5. Log out and log back in to the admin panel.
 
--- Create trigger
-DROP TRIGGER IF EXISTS on_auth_user_created_assign_admin ON auth.users;
-CREATE TRIGGER on_auth_user_created_assign_admin
-  AFTER INSERT ON auth.users
-  FOR EACH ROW
-  EXECUTE FUNCTION public.assign_admin_role_by_email();
-```
+---
 
 ## Verification
 After applying the fix, log out and log back in. The admin interface should now allow you to add articles and other content.
 
 ## Adding More Admin Users
-To add additional admin emails, modify the email list in:
-- The trigger function `assign_admin_role_by_email()`
-- Run the INSERT query with the new email addresses
+To add additional admin emails, run the INSERT query with the new email addresses:
+
+```sql
+INSERT INTO public.user_roles (user_id, role)
+SELECT id, 'admin'::app_role
+FROM auth.users
+WHERE email = 'new-admin@example.com'
+ON CONFLICT (user_id, role) DO NOTHING;
+```
+
+## Troubleshooting
+
+### Error: "type 'app_role' does not exist"
+This means the database migrations haven't been applied. Go back to **Step 1** and apply the migrations first.
+
+### Error: "relation 'public.user_roles' does not exist"
+Same as above - you need to apply the base migration first.
+
+### Still can't add content after adding admin role
+1. Make sure you logged out completely and logged back in
+2. Verify your role in the database:
+```sql
+SELECT u.email, ur.role
+FROM auth.users u
+LEFT JOIN public.user_roles ur ON u.id = ur.user_id
+WHERE u.email = 'your-email@example.com';
+```
