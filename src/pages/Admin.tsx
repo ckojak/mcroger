@@ -625,13 +625,38 @@ const ReleasesManager = ({ isAdmin }: { isAdmin: boolean }) => {
   );
 };
 
-// Media Manager Component with preview
+// Dados hardcoded do site para referência
+const SITE_PHOTOS = [
+  { id: "site-1", title: "Foto 1", path: "foto1.jpg", source: "assets" },
+  { id: "site-2", title: "Foto 2", path: "foto2.jpg", source: "assets" },
+  { id: "site-3", title: "Foto 3", path: "foto3.jpg", source: "assets" },
+  { id: "site-4", title: "Foto 4", path: "foto4.jpg", source: "assets" },
+  { id: "site-5", title: "Foto 5", path: "foto5.jpg", source: "assets" },
+  { id: "site-6", title: "Foto 6", path: "foto6.jpg", source: "assets" },
+];
+
+const SITE_VIDEOS = [
+  { id: "site-v1", title: "Vídeo Destaque", url: "https://youtu.be/78QVCTj7PJg?si=PJjUp5uG_ebv3T3_" },
+  { id: "site-v2", title: "Vídeo 01", url: "https://youtu.be/HJrp6VtgGSE?si=w3uJW5WCQbbSlZ0B" },
+  { id: "site-v3", title: "Vídeo 02", url: "https://youtu.be/UTYNURBuv7o?si=MvLgEw-Wx53GT5dP" },
+  { id: "site-v4", title: "Vídeo 03", url: "https://youtu.be/1nSogoq89bU?si=_YCSSB4PCDxp3Hn6" },
+];
+
+const SITE_DRIVE_LINKS = {
+  fotos: "https://drive.google.com/drive/u/0/mobile/folders/1otv3BEwuUu8lYU4sUsBaqCdxCxOpBond",
+  videos: "https://drive.google.com/drive/u/0/mobile/folders/128hkN0_VTcLUhI8lwrUq6bxxRCGdS4yJ",
+  logos: "https://drive.google.com/drive/u/0/mobile/folders/1564cllDHDGUQF4sNMl67WNsehGsux59e",
+  rider: "https://drive.google.com/drive/u/0/mobile/folders/1NjKRbpihW_jzJKvempMQtV3EqWCpFdAV",
+};
+
+// Media Manager Component with preview and site content
 const MediaManager = ({ category, isAdmin }: { category: string; isAdmin: boolean }) => {
   const [items, setItems] = useState<any[]>([]);
   const [form, setForm] = useState({ title: "", url: "", thumbnail_url: "", drive_link: "" });
   const [editingId, setEditingId] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [previewItem, setPreviewItem] = useState<any>(null);
+  const [driveLink, setDriveLink] = useState(SITE_DRIVE_LINKS[category as keyof typeof SITE_DRIVE_LINKS] || "");
 
   const categoryLabels: Record<string, string> = {
     fotos: "Fotos",
@@ -694,6 +719,79 @@ const MediaManager = ({ category, isAdmin }: { category: string; isAdmin: boolea
     return (match && match[2].length === 11) ? match[2] : "";
   };
 
+  // Renderizar conteúdo do site (hardcoded)
+  const renderSiteContent = () => {
+    if (category === "fotos") {
+      return (
+        <div className="bg-surface-dark border border-border/50 rounded-lg p-4 mb-6">
+          <h3 className="font-gothic text-sm font-bold mb-3 text-muted-foreground flex items-center gap-2">
+            <Camera className="w-4 h-4" />
+            Fotos no Site (código)
+          </h3>
+          <div className="grid grid-cols-3 md:grid-cols-6 gap-2">
+            {SITE_PHOTOS.map((photo) => (
+              <div key={photo.id} className="aspect-square bg-muted rounded overflow-hidden">
+                <img 
+                  src={`/src/assets/${photo.path}`} 
+                  alt={photo.title}
+                  className="w-full h-full object-cover"
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src = '/placeholder.svg';
+                  }}
+                />
+              </div>
+            ))}
+          </div>
+          <p className="text-xs text-muted-foreground mt-2">
+            Estas fotos estão definidas no código (src/assets). Para alterá-las, é necessário substituir os arquivos.
+          </p>
+        </div>
+      );
+    }
+
+    if (category === "videos") {
+      return (
+        <div className="bg-surface-dark border border-border/50 rounded-lg p-4 mb-6">
+          <h3 className="font-gothic text-sm font-bold mb-3 text-muted-foreground flex items-center gap-2">
+            <Video className="w-4 h-4" />
+            Vídeos no Site (código)
+          </h3>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+            {SITE_VIDEOS.map((video) => {
+              const videoId = getYouTubeId(video.url);
+              return (
+                <a 
+                  key={video.id}
+                  href={video.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group relative aspect-video bg-muted rounded overflow-hidden block"
+                >
+                  <img 
+                    src={`https://img.youtube.com/vi/${videoId}/mqdefault.jpg`}
+                    alt={video.title}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                    <Video className="w-6 h-6 text-white" />
+                  </div>
+                  <p className="absolute bottom-1 left-1 right-1 text-xs text-white truncate bg-black/60 px-1 rounded">
+                    {video.title}
+                  </p>
+                </a>
+              );
+            })}
+          </div>
+          <p className="text-xs text-muted-foreground mt-2">
+            Estes vídeos estão definidos no código (MediaSection.tsx). Para alterá-los, edite os links no arquivo.
+          </p>
+        </div>
+      );
+    }
+
+    return null;
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -701,8 +799,36 @@ const MediaManager = ({ category, isAdmin }: { category: string; isAdmin: boolea
         <Button variant="ghost" size="sm" onClick={fetchItems}><RefreshCw className={`w-4 h-4 ${isLoading ? 'animate-spin' : ''}`} /></Button>
       </div>
 
+      {/* Link do Google Drive */}
+      <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
+        <h3 className="font-gothic text-sm font-bold mb-2 flex items-center gap-2 text-blue-300">
+          <ExternalLink className="w-4 h-4" />
+          Link Google Drive - {categoryLabels[category]}
+        </h3>
+        <div className="flex gap-2">
+          <Input 
+            value={driveLink}
+            onChange={(e) => setDriveLink(e.target.value)}
+            placeholder="https://drive.google.com/..."
+            className="flex-1 text-xs"
+          />
+          <a href={driveLink} target="_blank" rel="noopener noreferrer">
+            <Button variant="outline" size="sm">
+              <ExternalLink className="w-4 h-4" />
+            </Button>
+          </a>
+        </div>
+        <p className="text-xs text-muted-foreground mt-2">
+          Este link aparece no site abaixo do botão "{categoryLabels[category]}". Para alterar permanentemente, edite o arquivo MediaSection.tsx.
+        </p>
+      </div>
+
+      {/* Conteúdo do site */}
+      {renderSiteContent()}
+
+      {/* Formulário de adição */}
       <div className="bg-card border border-border rounded-lg p-4">
-        <h3 className="font-gothic font-bold mb-4">{editingId ? "Editar" : "Adicionar"} {categoryLabels[category]}</h3>
+        <h3 className="font-gothic font-bold mb-4">{editingId ? "Editar" : "Adicionar"} {categoryLabels[category]} (banco de dados)</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div><Label>Título *</Label><Input value={form.title} onChange={(e) => setForm({...form, title: e.target.value})} placeholder="Nome descritivo" /></div>
           <div><Label>URL {category === "videos" ? "YouTube" : "do arquivo"} *</Label><Input value={form.url} onChange={(e) => setForm({...form, url: e.target.value})} placeholder={category === "videos" ? "https://youtube.com/..." : "https://..."} /></div>
@@ -715,63 +841,67 @@ const MediaManager = ({ category, isAdmin }: { category: string; isAdmin: boolea
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {items.length === 0 && (
-          <div className="col-span-full text-center py-8 text-muted-foreground">
-            Nenhum item cadastrado. Adicione acima ou as mídias hardcoded no código aparecerão no site.
-          </div>
-        )}
-        {items.map((item) => {
-          const isVideo = category === "videos";
-          const thumbnailUrl = item.thumbnail_url || (isVideo && item.url ? `https://img.youtube.com/vi/${getYouTubeId(item.url)}/mqdefault.jpg` : item.url);
-          
-          return (
-            <div key={item.id} className={`bg-card border rounded-lg overflow-hidden ${!item.is_active ? 'opacity-50' : ''}`}>
-              <div 
-                className="relative aspect-video bg-muted cursor-pointer group"
-                onClick={() => setPreviewItem(item)}
-              >
-                {(category === "fotos" || category === "logos" || isVideo) && thumbnailUrl && (
-                  <img 
-                    src={thumbnailUrl} 
-                    alt={item.title} 
-                    className="w-full h-full object-cover"
-                    onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
-                  />
-                )}
-                {category === "rider" && (
-                  <div className="flex items-center justify-center h-full">
-                    <FileText className="w-12 h-12 text-blood-light" />
-                  </div>
-                )}
-                <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                  <Eye className="w-8 h-8 text-white" />
-                </div>
-              </div>
-              <div className="p-3">
-                <p className="font-medium text-sm truncate">{item.title}</p>
-                <p className="text-xs text-muted-foreground truncate">{item.url}</p>
-                <div className="flex gap-1 mt-2 flex-wrap">
-                  <Button variant="ghost" size="sm" onClick={() => handleToggleActive(item.id, item.is_active)}>
-                    {item.is_active ? <Eye className="w-4 h-4 text-green-500" /> : <EyeOff className="w-4 h-4" />}
-                  </Button>
-                  <Button variant="ghost" size="sm" onClick={() => handleEdit(item)}><Edit className="w-4 h-4" /></Button>
-                  <Button variant="ghost" size="sm" onClick={() => handleDelete(item.id)}><Trash2 className="w-4 h-4 text-destructive" /></Button>
-                  {item.url && (
-                    <a href={item.url} target="_blank" rel="noopener noreferrer">
-                      <Button variant="ghost" size="sm"><ExternalLink className="w-4 h-4" /></Button>
-                    </a>
-                  )}
-                  {item.drive_link && (
-                    <a href={item.drive_link} target="_blank" rel="noopener noreferrer">
-                      <Button variant="ghost" size="sm" title="Google Drive"><FileImage className="w-4 h-4 text-blue-400" /></Button>
-                    </a>
-                  )}
-                </div>
-              </div>
+      {/* Lista do banco de dados */}
+      <div>
+        <h3 className="font-gothic text-sm font-bold mb-3 text-muted-foreground">Itens no Banco de Dados ({items.length})</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {items.length === 0 && (
+            <div className="col-span-full text-center py-8 text-muted-foreground bg-card border border-border/30 rounded-lg">
+              Nenhum item cadastrado no banco. Use o formulário acima para adicionar.
             </div>
-          );
-        })}
+          )}
+          {items.map((item) => {
+            const isVideo = category === "videos";
+            const thumbnailUrl = item.thumbnail_url || (isVideo && item.url ? `https://img.youtube.com/vi/${getYouTubeId(item.url)}/mqdefault.jpg` : item.url);
+            
+            return (
+              <div key={item.id} className={`bg-card border rounded-lg overflow-hidden ${!item.is_active ? 'opacity-50' : ''}`}>
+                <div 
+                  className="relative aspect-video bg-muted cursor-pointer group"
+                  onClick={() => setPreviewItem(item)}
+                >
+                  {(category === "fotos" || category === "logos" || isVideo) && thumbnailUrl && (
+                    <img 
+                      src={thumbnailUrl} 
+                      alt={item.title} 
+                      className="w-full h-full object-cover"
+                      onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
+                    />
+                  )}
+                  {category === "rider" && (
+                    <div className="flex items-center justify-center h-full">
+                      <FileText className="w-12 h-12 text-blood-light" />
+                    </div>
+                  )}
+                  <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                    <Eye className="w-8 h-8 text-white" />
+                  </div>
+                </div>
+                <div className="p-3">
+                  <p className="font-medium text-sm truncate">{item.title}</p>
+                  <p className="text-xs text-muted-foreground truncate">{item.url}</p>
+                  <div className="flex gap-1 mt-2 flex-wrap">
+                    <Button variant="ghost" size="sm" onClick={() => handleToggleActive(item.id, item.is_active)}>
+                      {item.is_active ? <Eye className="w-4 h-4 text-green-500" /> : <EyeOff className="w-4 h-4" />}
+                    </Button>
+                    <Button variant="ghost" size="sm" onClick={() => handleEdit(item)}><Edit className="w-4 h-4" /></Button>
+                    <Button variant="ghost" size="sm" onClick={() => handleDelete(item.id)}><Trash2 className="w-4 h-4 text-destructive" /></Button>
+                    {item.url && (
+                      <a href={item.url} target="_blank" rel="noopener noreferrer">
+                        <Button variant="ghost" size="sm"><ExternalLink className="w-4 h-4" /></Button>
+                      </a>
+                    )}
+                    {item.drive_link && (
+                      <a href={item.drive_link} target="_blank" rel="noopener noreferrer">
+                        <Button variant="ghost" size="sm" title="Google Drive"><FileImage className="w-4 h-4 text-blue-400" /></Button>
+                      </a>
+                    )}
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
       </div>
 
       {/* Preview Modal */}
