@@ -6,7 +6,6 @@ const corsHeaders = {
 }
 
 Deno.serve(async (req) => {
-  // Handle CORS preflight
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders })
   }
@@ -14,7 +13,6 @@ Deno.serve(async (req) => {
   try {
     const { email, token } = await req.json()
     
-    // Verificar token de setup
     const setupToken = Deno.env.get('ADMIN_SETUP_TOKEN')
     if (!setupToken || token !== setupToken) {
       return new Response(
@@ -30,17 +28,13 @@ Deno.serve(async (req) => {
       )
     }
 
-    // Create Supabase client with service role
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!
     const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
-    
     const supabase = createClient(supabaseUrl, supabaseServiceKey)
 
-    // Buscar usuário pelo email
     const { data: authUsers, error: authError } = await supabase.auth.admin.listUsers()
     
     if (authError) {
-      console.error('Error listing users:', authError)
       return new Response(
         JSON.stringify({ error: 'Erro ao buscar usuários' }),
         { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
@@ -51,42 +45,42 @@ Deno.serve(async (req) => {
     
     if (!user) {
       return new Response(
-        JSON.stringify({ error: 'Usuário não encontrado. Certifique-se de que já criou uma conta.' }),
+        JSON.stringify({ error: 'Usuário não encontrado. Crie a conta primeiro.' }),
         { status: 404, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       )
     }
 
-    // Inserir ou atualizar role para admin
+    // AQUI ESTÁ A EDIÇÃO: Adicionado site_id e ajuste no conflito
     const { error: insertError } = await supabase
       .from('user_roles')
       .upsert(
-        { user_id: user.id, role: 'admin' },
-        { onConflict: 'user_id,role' }
+        { 
+          user_id: user.id, 
+          role: 'admin', 
+          site_id: 'Mcroger' 
+        },
+        { onConflict: 'user_id,role,site_id' }
       )
 
     if (insertError) {
-      console.error('Error inserting role:', insertError)
       return new Response(
         JSON.stringify({ error: 'Erro ao atribuir permissão' }),
         { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       )
     }
 
-    console.log(`Admin role assigned to user: ${email} (${user.id})`)
-
     return new Response(
       JSON.stringify({ 
         success: true, 
-        message: `Usuário ${email} agora é administrador!`,
+        message: `Usuário ${email} agora é administrador do MCRoger!`,
         user_id: user.id 
       }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     )
 
   } catch (error) {
-    console.error('Setup admin error:', error)
     return new Response(
-      JSON.stringify({ error: 'Erro interno do servidor' }),
+      JSON.stringify({ error: 'Erro interno' }),
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     )
   }
